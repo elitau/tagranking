@@ -1,0 +1,51 @@
+
+\input{header}
+
+\begin{document}
+	
+	
+	% Aussehen der Captions fuer subfigures (subfig-Paket)
+	 \captionsetup[subfloat]{%
+	   margin = 10pt,
+	   font = {small,rm},
+	   labelfont = {small,bf},
+	   format = plain, % oder 'hang'
+	   indention = 0em,  % Einruecken der Beschriftung
+	   labelsep = space, %period, space, quad, newline
+	   justification = RaggedRight, % justified, centering
+	   singlelinecheck = true, % false (true=bei einer Zeile immer zentrieren)
+	   position = bottom, %top
+	   labelformat = parens % simple, empty % Wie die Bezeichnung gesetzt wird
+	 }
+	
+	
+	
+
+%Leeres Vorblatt
+\newpage
+\thispagestyle{empty} 
+
+
+
+\include{chapter/0-titel_und_abstract}
+
+%\maketitle
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+
+\include{chapter/motivation}
+\include{chapter/analyse}
+\include{chapter/verfahren}
+\include{chapter/performance}
+\include{chapter/vergleich_und_bewertung}
+\include{chapter/fazit}
+
+\bibliography{bib/literatur}
+
+\bibliographystyle{dinat}
+%\bibliographystyle{plaindin}
+
+
+\end{document}

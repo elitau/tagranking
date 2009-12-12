@@ -1,0 +1,110 @@
+%!TEX root = /Users/leicester/data/master/SS08/AS/Ausarbeitung/as-ausarbeitung.tex
+%
+% HEADER
+%
+
+\documentclass[pdf,
+12pt, % Schriftgröße 12?
+%	draft, % zur schnelleren Anzeige und zum Auffinden zu voller/leerer Boxen
+	oneside, % einseitige Ausgabe
+%	abstracton, % Abstract/Zusammenfassung einfügen
+	pdftex, % Ausgabe mit pdftex
+	a4paper, % Ausgabe auf A4
+	titlepage, % Titelseite ausgeben
+	halfparskip, % halbzeiliger Abstand zwischen Absätzen
+%	idxtotoc, % Index im Inhaltsverzeichnis aufführen
+	bibtotoc % Literaturverzeichnis im Inhaltsverzeichnis aufführen
+	]{scrartcl}
+	
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{enumerate}
+
+ % defines wrapfigure and wrapfloat
+\usepackage{wrapfig}	       
+
+
+% Paket für Graphiken
+%\usepackage{graphicx}
+\usepackage[dvips]{graphicx}            % to include images
+
+% Ränder einstellen
+%\usepackage[left=5cm,right=1.5cm,top=1cm,bottom=2cm,includeheadfoot]{geometry}
+
+
+% Umgebung für Kapitelseiten und Inhatsverzeichnis setzen
+\usepackage{fancyhdr} 
+\pagestyle{fancy} 
+% with this we ensure that the chapter and section 
+% headings are in lowercase 
+%\renewcommand{\chaptermark}[1]{markboth{#1}{}} 
+%\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}} 
+\fancyhf{} %delete the current section for header and footer
+\fancyfoot[EC,OC]{\bfseries\thepage} 
+\renewcommand{\headrulewidth}{0.5pt}
+%\renewcommand{\footrulewidth}{0.5pt}
+% make space for the rule 
+\fancypagestyle{plain}{% 
+\fancyhead{} %get rid of the headers on plain pages 
+\renewcommand{\headrulewidth}{0} % and the line 
+}
+
+
+
+
+
+% Paket für Farben im PDF laden
+\usepackage{color}
+
+% Linkfarbe setzen
+%\definecolor{LinkColor}{rgb}{0,0,0.5}
+\definecolor{LinkColor}{rgb}{0,0,0}
+
+% Links im PDF aktivieren und PDF-Optionen setzen
+\usepackage[%
+	pdftitle={},%
+	pdfauthor={anonymus},%	
+	pdfsubject={},
+	pdfkeywords={}]{hyperref}
+
+% Linkfarben setzen
+\hypersetup{colorlinks=true,%
+	linkcolor=LinkColor,%
+	citecolor=LinkColor,%
+	filecolor=LinkColor,%
+	menucolor=LinkColor,%
+	pagecolor=LinkColor,%
+	urlcolor=LinkColor}
+	
+	
+%%  Zitieren
+\usepackage[
+square, %for square brackets;
+numbers % for numerical citations;
+]{natbib}
+
+
+%%% Kopfzeile
+\subject{Ausarbeitung}
+\title{}
+%\author{Tim Haussmann\\mim103@gm.fh-koeln.de}
+
+
+%Hurenkinder und Schusterjungen verhindern
+\clubpenalty = 10000
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+
+
+
+
+\usepackage{subfig} 
+
+
+
+
+
+
+%% EOF
+%
