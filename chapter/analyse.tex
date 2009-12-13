@@ -34,7 +34,7 @@ Die nächsten Abschnitte beschreiben also zunächst die in flickr vorhandenen Ph
     \label{fig:images_collectiveKnowledge_word_net_categories}
 \end{figure}
 
-Abbildung \ref{fig:images_collectiveKnowledge_word_net_categories} veranschaulicht die Häufigkeitsverteilung der Tags. Die Abszisse repräsentiert die 3,7 Millionen eindeutigen Tags sortiert nach absteigender Häufigkeit, während die Ordinate die Häufigkeit selbst darstellt. Die ablesbare Kurve wird sehr gut durch das Potenzgesetz  beschrieben. Dieses besagt, dass geringe Vorkommnisse sehr häufig sind und große Anhäufungen sehr selten auftreten. Im vorliegenden Fall werden einige wenige Tags sehr oft von den Benutzer für Annotationen verwendet, wohingegen die meisten Tags nur selten eingesetzt werden.
+Abbildung \ref{fig:images_collectiveKnowledge_word_net_categories} veranschaulicht die Häufigkeitsverteilung der Tags. Die Abszisse repräsentiert die 3,7 Millionen eindeutigen Tags sortiert nach absteigender Häufigkeit, während die Ordinate die Häufigkeit selbst darstellt. Die ablesbare Kurve wird sehr gut durch das Potenzgesetz  beschrieben, vgl. \cite{hpParetoPowerLaw}. Dieses besagt für beobachtete Phänomene in der Welt, dass geringe Vorkommnisse sehr häufig und große Anhäufungen sehr selten auftreten. Im vorliegenden Fall werden einige wenige Tags sehr oft von den Benutzer für Annotationen verwendet, wohingegen die meisten Tags nur selten eingesetzt werden.
 
 In Anbetracht der Aufgabe, dem Benutzer passende Tags für die Annotation vorzuschlagen, ist es laut \cite{collectiveKnowledge} nicht sinnvoll die häufigsten Tags anzubieten, da diese zu allgemein in ihrer Bedeutung sind. So sind die 5 am meisten verwendeten Tags \emph{2006, 2005, wedding, party} und \emph{2004}. Analog dazu sind die extrem selten verwendeten Tags zu spezifisch und eigenen sich ebenfalls nur bedingt für die vorgesehene Aufgabe.
 
@@ -103,11 +103,12 @@ Um besser zu verstehen welche Art von Tags die Benutzer vergeben und welche Moti
   \label{fig:collectiveKnowledge_word_net_categories}
 \end{figure}
 
-52 Prozent der Tags konnten zu WordNet Kategorien zugeordnet werden. Dabei wurde, falls mehrere Kategorien für ein Tag in Frage kamen, die als wichtiger eingestufte Kategorie für die Auswertung gewählt. 
+52 Prozent der Tags konnten zu WordNet Kategorien zugeordnet werden, die restlichen Tags sind nicht  Dabei wurde, falls mehrere Kategorien für ein Tag in Frage kamen, die als wichtiger eingestufte Kategorie für die Auswertung gewählt. Mit 28 Prozent der klassifizierten Tags erreichen \emph{Ortsangaben} den höchsten Anteil. Die weiteren Kategorien sind \emph{Menschen oder Gruppen}, \emph{Handlungen oder Ereignisse} und \emph{Zeit}. \cite{collectiveKnowledge} schließen daraus, dass Benutzer nicht nur visuellen Inhalt von Photos, sondern auch Kontextinformationen wie Ort, Zeit und Ereignis annotieren.
 
-- From this information, we can conclude that users do not only tag the visual contents of the photo, but to a large extent provide a broader context in which the photo was taken, such as, location, time, and actions.
+Auf Basis dieser Analyse und Klassifikation wurde das Verfahren entwickelt, welches in Abschnitt \ref{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol} beschrieben wird.
 
-Damit ist auch geklärt, welche Art von Tags Benutzer am häufigsten verwenden. Auf Basis dieser Analyse und Klassifikation wurde das Verfahren entwickelt, welches in Abschnitt \ref{sec:tag_ranking_verfahren} beschrieben wird.
+% TODO: Hier noch was mehr zu dem anderen verfahren oder mal was abschließendes und zusammenfassendes
+
 % subsubsection tags (end)  
 
 % subsection klassifikation_von_tags (end)

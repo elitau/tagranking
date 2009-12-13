@@ -16,7 +16,10 @@ Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen.
 % \end{itemize}
 
 \subsection{Ranking basierend auf kollektivem Wissen nach Sigurbjörnsson und van Zwol} % (fold)
-\label{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol_et_al_}
+\label{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol}
+
+
+
 
 \begin{itemize}
   \item Tag co-occurrence is the key to our tag recommendation approach, and only works reliable when a large quantity of supporting data is available.
@@ -36,10 +39,32 @@ Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen.
   \label{fig:images_collective_knowledge_system_overview}
 \end{figure}
 
+ - Verfahren basiert auf Tag co-occurrence
+Tag co-occurrence is the key to our tag recommendation approach, and only works reliable when a large quantity of supporting data is available.
 
-Ausführliche Beschreibung des Verfahrens folgt.
+ - Definition von co-occurrence nach \cite{collectiveKnowledge}
+   - sehr einfache basis für verfahren
+ - um die den wert der co-occurrence von der allgemeinen verwendungs-frequenz zu trennen, wird dieser wert normalisiert. 
+ - co-occurrence als asymmetrische Maßeinheit
+   - unterschiedliche Normalisierung möglich
+   - im gegensatz zu einer symmetrischen normalisierung, die eher die Äquivalenz von zwei tags angibt, da hierbei die summe der anzahl beider tags als divisor verwendet wird und somit die gemeinsame Auftrittswahrscheinlich für diese beiden Tags angegeben wird.
+\begin{figure}[hptb]
+  \begin{equation}
+  \label{symmetricNormalization}
+   J(t_i, t_j) := \frac{\vert t_i \cap t_j \vert}{ \vert t_i \cup t_j \vert }
+  \end{equation}
+\end{figure}
+   
+   - bei der asymmetrischen normalisierung wird die anzahl des gemeinsamen auftretens durch die anzahl des ersten tags dividiert. damit wird also erfasst, wie oft tag ti gemeinsam mit tj gelistet wird, was beim vorschlagen von tags mehr sinn macht, damit der inhalt der photos möglichst vielfältig anstatt genau getaggt werden kann.
+   % TODO: hier gibts kritikmöglichkeit, evtl. später aufgreifen.
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{symmetricNormalization}
+  J(t_i \vert t_j) := \frac{\vert t_i \cap t_j \vert}{ \vert t_i \vert }
+ \end{equation}
+\end{figure}
 
-% subsection ranking_basierend_auf_kollektivem_wissen_nach_zwol_et_al_ (end)
+% subsection ranking_basierend_auf_kollektivem_wissen_nach_zwol (end)
 
 \subsection{Verbesserung der Relevanz von Tags durch einen Random Walk nach Liu u. a.} % (fold)
 \label{sub:verbesserung_der_relevanz_durch_einen_random_walk}
