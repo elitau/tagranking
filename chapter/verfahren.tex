@@ -1,7 +1,7 @@
 %!TEX root = /Users/ede/Documents/Master/19_AS/Ausarbeitung/as-ausarbeitung.tex
 \section{Tag-Ranking Verfahren} % (fold)
 \label{sec:tag_ranking_verfahren}
-Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen.
+Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bessere Einleitung für dieses Kapitel.
 
 % 
 % 
@@ -31,7 +31,7 @@ Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen.
 
 
 
-Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch gemeinsames Auftreten, von Tags bei unterschiedlichen Bildern. Diese Häufigkeits-Größe fließt zunächst in die Generierung von einer Kandidaten-Sequenz von zugehörigen Tags für jedes vom Benutzer vergebene Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Ranking, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
+Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch \emph{gemeinsames Auftreten}, von Tags bei unterschiedlichen Bildern. Diese Häufigkeits-Größe fließt zunächst in die Generierung von einer Kandidaten-Sequenz von zugehörigen Tags für jedes vom Benutzer vergebene Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Ranking, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
 
 \begin{figure}[htbp]
   \centering
@@ -46,7 +46,7 @@ Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skiz
  % - Verfahren basiert auf Tag co-occurrence
 % Tag co-occurrence is the key to our tag recommendation approach, and only works reliable when a large quantity of supporting data is available.
 
-Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet ``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''
+Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''}
  
  % - sehr einfache basis für verfahren
  
@@ -81,26 +81,43 @@ Anschließend fließen die Untersuchungsergebnisse aus Kapitel \ref{sec:analyse_
 
 Hier folgen noch die mathematischen Erläuterungen.
 
+Der eben gelesene Abschnitt zum Verfahren von \cite{collectiveKnowledge} wird noch weiter vertieft werden.
 
 % subsection ranking_basierend_auf_kollektivem_wissen_nach_zwol (end)
 
 \subsection{Verbesserung der Relevanz von Tags durch einen Random Walk nach Liu u. a.} % (fold)
 \label{sub:verbesserung_der_relevanz_durch_einen_random_walk}
 
-\begin{itemize}
-  \item Wahrscheinlichkeitsorientierte Schätzung der Relevanz von Tags.
-  \item Random-Walk basierte Verfeinerung des Rankings
-    
-    \begin{itemize}
-      \item Aufbau eines Beziehungs-Graphen der Tags.
-      \item Random Walk über den Graphen
-    \end{itemize}
-\end{itemize}
+% \begin{itemize}
+%   \item Wahrscheinlichkeitsorientierte Schätzung der Relevanz von Tags.
+%   \item Random-Walk basierte Verfeinerung des Rankings
+%     
+%     \begin{itemize}
+%       \item Aufbau eines Beziehungs-Graphen der Tags.
+%       \item Random Walk über den Graphen
+%     \end{itemize}
+% \end{itemize}
+
+% Bei diesem Verfahren wird wie bei dem von \cite{collectiveKnowledge} die co-occurrence als Initialwert für den Rank eines Tags gewählt.
+- Initialwert ist zunächst für alle Tags gleich
+
+- Zunächst Bestimmung des Wertes durch Beziehung zu Photos mit gleichen Tags, ähnliche dem Ansatz von \cite{collectiveKnowledge}. Dieser Wert ist die Gewichtung der Kanten zwischen zwei Tags/Knoten im folgenden Graph.
+
+- Daraufhin wird ein Tag Graph erstellt, der als Basis für einen Random Walk dient. Vgl. \cite{} für Random Walk Literatur. 
+
+- Dabei wird der Graph als Matrix mit den Ranking Werten formuliert. 
+
+- Durch den Random Walk werden die Relevanzwerte durch die Gewichtung der Tags zu einander angepasst.
+% Initialwert für den Rank eines Tags wird durch die Beziehung zwischen durch die Photos assoziierten Tags bestimmt. Für jedes Photo x mit den Nachbarn (haben den gleichen Tag) X
+
+% Daraufhin erfolgt das Erstellen eines Tag Graphen 
+
+
 
 \begin{figure}[htbp]
   \centering
     \includegraphics[height=2in]{images/tag_ranking_verfahren.png}
-  \caption{The illustrative scheme of the tag ranking approach. A probabilistic method is first adopted to estimate tag relevance score. Then a random walk-based refinement is performed along the tag graph to further boost tag ranking performance aus \cite{ranking}}
+  \caption{Schema zum Tag Ranking Ansatz von \cite{ranking}.}
   \label{fig:images_tag_ranking_verfahren}
 \end{figure}
 
