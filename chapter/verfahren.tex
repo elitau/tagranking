@@ -1,6 +1,7 @@
 %!TEX root = /Users/ede/Documents/Master/19_AS/Ausarbeitung/as-ausarbeitung.tex
 \section{Tag-Ranking Verfahren} % (fold)
 \label{sec:tag_ranking_verfahren}
+% TODO
 Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bessere Einleitung für dieses Kapitel.
 
 % 
@@ -31,7 +32,7 @@ Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bess
 
 
 
-Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch \emph{gemeinsames Auftreten}, von Tags bei unterschiedlichen Bildern. Diese Häufigkeits-Größe fließt zunächst in die Generierung von einer Kandidaten-Sequenz von zugehörigen Tags für jedes vom Benutzer vergebene Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Ranking, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
+Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch \emph{gemeinsames Auftreten}, von Tags bei unterschiedlichen Bildern. Diese Häufigkeitsgröße fließt zunächst in die Generierung einer Kandidatensequenz von zugehörigen Tags für jedes vom Benutzer vergebene Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Ranking, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
 
 \begin{figure}[htbp]
   \centering
@@ -46,11 +47,11 @@ Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skiz
  % - Verfahren basiert auf Tag co-occurrence
 % Tag co-occurrence is the key to our tag recommendation approach, and only works reliable when a large quantity of supporting data is available.
 
-Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''}
+Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''} 
  
  % - sehr einfache basis für verfahren
  
-Um den wert der co-occurrence von der allgemeinen Verwendungsfrequenz der Tags zu trennen, wird dieser Wert normalisiert. Co-occurrence als Maßeinheit für das gemeinsame Auftreten von Tags kann auf unterschiedliche Weise normalisiert werden, was starke Auswirkung auf das Ergebnis hat.
+Um den Wert der co-occurrence von der allgemeinen Verwendungsfrequenz der Tags zu trennen wird dieser Wert normalisiert. Co-occurrence als Maßeinheit für das gemeinsame Auftreten von Tags kann auf unterschiedliche Weise normalisiert werden, was deutliche Auswirkung auf das Ergebnis hat.
 
 Die symmetrischen Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und ${t_j}$ an, da hierbei die Summe der Anzahl beider Tags als Divisor verwendet wird und somit die gemeinsame Auftrittswahrscheinlich für diese beiden Tags angegeben wird. Beispielsweise sind zu \emph{Eiffel Tower} als äquivalent gefundene Tags \emph{Tour Eiffel, Eiffel, Seine, La Tour Eiffel} und \emph{Paris}.
 \begin{figure}[hptb]
@@ -62,7 +63,7 @@ Die symmetrischen Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und
 
 Die co-occurrence $J(t_i, t_j)$ ist also ein Koeffizient aus der Schnittmenge der Tags ${t_i}$ und ${t_j}$, und der Vereinigungsmenge von ${t_i}$ und ${t_j}$.
 
-Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens durch die Anzahl des ersten Tags dividiert. Damit wird also erfasst, wie oft ${t_i}$ gemeinsam mit ${t_j}$ gelistet wird, was beim Vorschlagen von tags mehr Sinn macht, damit der Inhalt der Photos möglichst vielfältig anstatt genau getaggt werden kann. So ergibt der Tag \emph{Eiffel Tower} folgende Sequenz assoziierter Tags: \emph{Paris, France, Tour Eiffel, Eiffel} und \emph{Europe}.
+Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens durch die Anzahl des ersten Tags dividiert. Damit wird also erfasst, wie oft ${t_i}$ gemeinsam mit ${t_j}$ gelistet wird, was beim Vorschlagen von Tags mehr Sinn macht, damit der Inhalt der Photos möglichst vielfältig anstatt genau getaggt werden kann. So ergibt der Tag \emph{Eiffel Tower} folgende Sequenz assoziierter Tags: \emph{Paris, France, Tour Eiffel, Eiffel} und \emph{Europe}.
    % TODO: hier gibts kritikmöglichkeit, warum diese normaliesierung gewählt wurde, evtl. später aufgreifen.
 \begin{figure}[hptb]
  \begin{equation}
@@ -73,7 +74,20 @@ Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens
 
 In Anbetracht der Aufgabe, die Medien möglichst vielfältig zu Taggen, wird die zweite Varianten von den Autoren verwendet.
 
-Bei der Aggregation werden die Kandidaten-Sequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste zu vereinigen. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, denen Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidaten-Tags iterieren. Die erste wertet Tags höher, die in allen Kandidaten-Sequenzen vorkommen, die zwei betrachtet nur den Wert der co-occurrence für die Tags.
+
+Die normalisierten Werte für die co-occurrence fließen nun beim Vorschlagen von Tags in den Ranking Prozess ein. Zunächst wird für jeden vom Benutzer bereits vergebenen Tag eine Kandidatensequenz von Tags erstellt, wobei die Tags nach ihrem co-occurrence Wert zu dem jeweiligen benutzerdefinierten Tag geordnet sind.
+
+Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, deren Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidatentags iterieren. Die erste wertet Tags höher, die in allen Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
+
+Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem Ranking verwendet:
+
+\begin{itemize}
+  \item Benutzerdefinierte Tags $U$ beziehen sich auf die zu einem Photo bereits vergebenen Tags.
+  \item Kandidatentags $C_u$ bezeichnet die nach dem co-occurrence Wert geordnete Liste von $m$ Tags für einen Tag $u \in U$. Die Menge $C$ ist somit die Vereinigungsmenge aller Kandidatentags für jeden vom Benutzer vergebenen Tag $u$.
+  \item Vorgeschlagene Tags $R$ ist die endgültige, vom System produzierte, geordnete Liste von $n$ höchst bewerteten Tags für ein Photo.
+\end{itemize}
+
+
 
 Hier folgen noch die mathematischen Erläuterungen.
 
