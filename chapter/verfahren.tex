@@ -68,28 +68,54 @@ Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens
 \begin{figure}[hptb]
  \begin{equation}
  \label{asymmetricNormalization}
-  J(t_i \vert t_j) := \frac{\vert t_i \cap t_j \vert}{ \vert t_i \vert }
+  P(t_i \vert t_j) := \frac{\vert t_i \cap t_j \vert}{ \vert t_i \vert }
  \end{equation}
 \end{figure}
 
 In Anbetracht der Aufgabe, die Medien möglichst vielfältig zu Taggen, wird die zweite Varianten von den Autoren verwendet.
 
-
-Die normalisierten Werte für die co-occurrence fließen nun beim Vorschlagen von Tags in den Ranking Prozess ein. Zunächst wird für jeden vom Benutzer bereits vergebenen Tag eine Kandidatensequenz von Tags erstellt, wobei die Tags nach ihrem co-occurrence Wert zu dem jeweiligen benutzerdefinierten Tag geordnet sind.
-
-Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, deren Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidatentags iterieren. Die erste wertet Tags höher, die in allen Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
+Die normalisierten Werte für die co-occurrence fließen nun beim Vorschlagen von Tags in den Ranking Prozess ein. Zunächst wird für jeden vom Benutzer bereits vergebenen Tag $u$ eine Kandidatensequenz $C_u$ von Tags erstellt, wobei die Tags nach ihrem co-occurrence Wert zu dem jeweiligen benutzerdefinierten Tag geordnet sind.
 
 Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem Ranking verwendet:
-
 \begin{itemize}
   \item Benutzerdefinierte Tags $U$ beziehen sich auf die zu einem Photo bereits vergebenen Tags.
   \item Kandidatentags $C_u$ bezeichnet die nach dem co-occurrence Wert geordnete Liste von $m$ Tags für einen Tag $u \in U$. Die Menge $C$ ist somit die Vereinigungsmenge aller Kandidatentags für jeden vom Benutzer vergebenen Tag $u$.
   \item Vorgeschlagene Tags $R$ ist die endgültige, vom System produzierte, geordnete Liste von $n$ höchst bewerteten Tags für ein Photo.
 \end{itemize}
 
+Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, deren Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidatentags iterieren. Die erste wertet Tags höher, die in mehreren Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
+
+Bei der \emph{voting strategy} werden die Tags $c \in C$ höher gewertet bzw. überhaupt gezählt, falls der Tag $c$ in der Menge $C_u$, also einer Kandidatensequenz, vorkommt. 
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{voteAggregation}
+  vote(u, c)=\begin{cases}
+    1, & \text{wenn } c \in C_u\\
+    0, & \text{sonst }
+  \end{cases}
+ \end{equation}
+\end{figure}
+
+Der Ranking-Wert für einen Tag $c$ ergibt sich somit aus der Summe der \emph{votes}, wodurch sich auch die Sortierung der vorgeschlagenen Tags $R$ ergibt.
+
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{voteScoreAggregation}
+    score(c) := \sum_{u \in U} vote(u, c)
+ \end{equation}
+\end{figure}
 
 
-Hier folgen noch die mathematischen Erläuterungen.
+Die \emph{summing strategy} betrachtet hingegen den co-occurrence Wert zwischen den Tags $c$ und $u$. Für jeden Kandidatentag $c$ werden die einzelnen co-occurrence Werte zum Ranking-Wert $score(c)$ aufsummiert, falls dieser in der Kandidatensequenz $C_u$ für den benutzerdefinierten Tag $u$ enthalten ist. Das Ergebnis ist ebenfalls eine sortierte Menge von vorgeschlagenen Tags $R$.
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{sumScoreAggregation}
+    score(c) := \sum_{u \in U} (P(c \vert u), \text{wenn } c \in C_u)
+ \end{equation}
+\end{figure}
+
+
+
 
 Anschließend fließen die Untersuchungsergebnisse aus Kapitel \ref{sec:analyse_und_klassifikation}, dass sehr oft benutzte Tags wenig aussagefähig sind sowie dass sehr selten benutzte Tags zu spezifisch sind, in den Ranking Schritt ein. Die \emph{Descriptiveness-promotion} wertet Tags mit sehr hoher Frequenz ab. Das als \emph{Stability-promotion} bezeichnete Ranking reduziert den Ranking Wert bei geringer Frequenz. So werden alle Tags in Relation zu ihrer Verwendungshäufigkeit bewertet.
 
