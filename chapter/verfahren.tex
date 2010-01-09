@@ -4,6 +4,9 @@
 % TODO
 Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bessere Einleitung für dieses Kapitel.
 
+- bezug zw. tag ranking, relevanz, ranking-wert, den beiden verfahren, herstellen
+- relevanz bezieht sich ja bei denen immer auf die schon vergebenen tags
+
 % 
 % 
 % \begin{itemize}
@@ -32,7 +35,7 @@ Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bess
 
 
 
-Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch \emph{gemeinsames Auftreten}, von Tags bei unterschiedlichen Bildern. Diese Häufigkeitsgröße fließt zunächst in die Generierung einer Kandidatensequenz von zugehörigen Tags für jedes vom Benutzer vergebene Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Ranking, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
+Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skizziert und anschließend näher erläutert. Das Verfahren produziert für vom Benutzer vergebene bzw. benutzerdefinierte Tags eine geordnete Liste von weiteren, zugehörigen Tags. Grundlage des Rankings ist die \emph{co-occurrence}, oder zu deutsch \emph{gemeinsames Auftreten}, von Tags bei unterschiedlichen Bildern. Diese Häufigkeitsgröße fließt zunächst in die Generierung einer Kandidatensequenz von zugehörigen Tags für jedes benutzerdefinierte Tag ein. Die Sequenz dient dann als Eingabe für die Tag Aggregation und das anschließende Tag Promotion, was die endgültige, nach Relevanz sortierte Liste von Tags ergibt. Abbildung \ref{fig:images_collective_knowledge_system_overview} veranschaulicht das System.
 
 \begin{figure}[htbp]
   \centering
@@ -44,8 +47,11 @@ Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skiz
 
 
 
- % - Verfahren basiert auf Tag co-occurrence
+% TODO:- Verfahren basiert auf Tag co-occurrence
 % Tag co-occurrence is the key to our tag recommendation approach, and only works reliable when a large quantity of supporting data is available.
+
+\subsubsection{Co-occurrence} % (fold)
+\label{ssub:co_occurrence}
 
 Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''} 
  
@@ -64,7 +70,7 @@ Die symmetrischen Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und
 Die co-occurrence $J(t_i, t_j)$ ist also ein Koeffizient aus der Schnittmenge der Tags ${t_i}$ und ${t_j}$, und der Vereinigungsmenge von ${t_i}$ und ${t_j}$.
 
 Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens durch die Anzahl des ersten Tags dividiert. Damit wird also erfasst, wie oft ${t_i}$ gemeinsam mit ${t_j}$ gelistet wird, was beim Vorschlagen von Tags mehr Sinn macht, damit der Inhalt der Photos möglichst vielfältig anstatt genau getaggt werden kann. So ergibt der Tag \emph{Eiffel Tower} folgende Sequenz assoziierter Tags: \emph{Paris, France, Tour Eiffel, Eiffel} und \emph{Europe}.
-   % TODO: hier gibts kritikmöglichkeit, warum diese normaliesierung gewählt wurde, evtl. später aufgreifen.
+% TODO: hier gibts kritikmöglichkeit, warum diese normaliesierung gewählt wurde, evtl. später aufgreifen.
 \begin{figure}[hptb]
  \begin{equation}
  \label{asymmetricNormalization}
@@ -82,6 +88,12 @@ Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem
   \item Kandidatentags $C_u$ bezeichnet die nach dem co-occurrence Wert geordnete Liste von $m$ Tags für einen Tag $u \in U$. Die Menge $C$ ist somit die Vereinigungsmenge aller Kandidatentags für jeden vom Benutzer vergebenen Tag $u$.
   \item Vorgeschlagene Tags $R$ ist die endgültige, vom System produzierte, geordnete Liste von $n$ höchst bewerteten Tags für ein Photo.
 \end{itemize}
+
+% subsubsection co_occurrence (end)
+
+
+\subsubsection{Aggregation der Kandidatentags} % (fold)
+\label{ssub:aggregation}
 
 Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, deren Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidatentags iterieren. Die erste wertet Tags höher, die in mehreren Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
 
@@ -106,22 +118,75 @@ Der Ranking-Wert für einen Tag $c$ ergibt sich somit aus der Summe der \emph{vo
 \end{figure}
 
 
-Die \emph{summing strategy} betrachtet hingegen den co-occurrence Wert zwischen den Tags $c$ und $u$. Für jeden Kandidatentag $c$ werden die einzelnen co-occurrence Werte zum Ranking-Wert $score(c)$ aufsummiert, falls dieser in der Kandidatensequenz $C_u$ für den benutzerdefinierten Tag $u$ enthalten ist. Das Ergebnis ist ebenfalls eine sortierte Menge von vorgeschlagenen Tags $R$.
+Die \emph{summing strategy} betrachtet hingegen den co-occurrence Wert zwischen den Tags $c$ und $u$. Für jeden Kandidatentag $c$ werden die asymmetrischen co-occurrence Werte zum Ranking-Wert $score(c)$ aufsummiert, falls dieser in der Kandidatensequenz $C_u$ für den benutzerdefinierten Tag $u$ enthalten ist. Das Ergebnis ist ebenfalls eine sortierte Menge von vorgeschlagenen Tags $R$.
 \begin{figure}[hptb]
  \begin{equation}
  \label{sumScoreAggregation}
     score(c) := \sum_{u \in U} (P(c \vert u), \text{wenn } c \in C_u)
  \end{equation}
 \end{figure}
+% subsubsection aggregation (end)
+
+Die unterschiedlichen Auswirkungen der beiden Ranking Strategien auf die Reihenfolge der vorgeschlagenen Tags $R$ werden im Kapitel \ref{sec:performance_und_skalierung} erläutert. 
+
+\subsubsection{Promotion der Kandidatentags} % (fold)
+\label{ssub:promotion}
+Nach dem die Kandidatensequenzen $C_u$ für alle benutzerdefinierten Tags $u$ zu einer Sequenz von vorgeschlagenen Tags $R$ aggregiert wurden, erfolgt eine Auf- und Abwertung, von den Autoren \emph{promotion} genannt, der Ranking Werte der Tags.
+
+Dabei fließen die Untersuchungsergebnisse aus Kapitel \ref{sec:analyse_und_klassifikation}, dass sehr oft benutzte Tags wenig aussagefähig sind sowie dass sehr selten benutzte Tags zu spezifisch sind, in diesen Schritt ein. Das als \emph{Stability-promotion} bezeichnete Ranking reduziert den Ranking Wert bei geringer Frequenz. Die \emph{Descriptiveness-promotion} wertet Tags mit sehr hoher Frequenz ab. So werden alle Tags in Relation zu ihrer Verwendungshäufigkeit nochmals bewertet. 
+
+Beides sind Gewichtungsfunktionen (\ref{stabilityPromotion} und \ref{descriptivePromotion}) mit festen Parametern $k_s$ respektive $k_d$, die durch Training von den Autoren ermittelt wurden. $\vert u \vert$ bzw. $\vert c \vert$ ist die Verwendungshäufigkeit des Tags $u$ bzw. $c$ bezogen auf die gesamte Tag Menge. Die Funktion $abs(x)$ gibt den absoluten Wert von $x$ zurück.
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{stabilityPromotion}
+    stability(u) := \frac{k_s}{k_s + abs(k_s - log(\vert u \vert))}
+ \end{equation}
+\end{figure}
+
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{descriptivePromotion}
+    descriptive(c) := \frac{k_d}{k_d + abs(k_d - log(\vert c \vert))}
+ \end{equation}
+\end{figure}
 
 
 
+Da der co-occurrence Wert sehr schnell abfällt, werden die Tags zusätzlich nach ihrer Reihenfolge in der Kandidatensequenz bewertet. Dies wird nach \cite{collectiveKnowledge} als \emph{Rank-promotion} bezeichnet. $r$ ist hierbei die Position des Tags $c \in C_u$ für einen benutzerdefinierten Tag $u$. Der Dämpfungsparameter $k_r$ wird ebenfalls durch Training ermittelt. 
+\begin{figure}[hptb]
+ \begin{equation}
+ \label{rankPromotion}
+    rank(u, c) = \frac{k_r}{k_r + (r-1)}
+ \end{equation}
+\end{figure}
 
-Anschließend fließen die Untersuchungsergebnisse aus Kapitel \ref{sec:analyse_und_klassifikation}, dass sehr oft benutzte Tags wenig aussagefähig sind sowie dass sehr selten benutzte Tags zu spezifisch sind, in den Ranking Schritt ein. Die \emph{Descriptiveness-promotion} wertet Tags mit sehr hoher Frequenz ab. Das als \emph{Stability-promotion} bezeichnete Ranking reduziert den Ranking Wert bei geringer Frequenz. So werden alle Tags in Relation zu ihrer Verwendungshäufigkeit bewertet.
 
-Hier folgen noch die mathematischen Erläuterungen.
+Die kombinierte Gleichung für die Promotion ergibt sich aus einer Multiplikation der einzelnen Auf- und Abwertungen:
+\begin{figure}[!hptb]
+ \begin{equation}
+ \label{combinedPromotion}
+    promotion(u, c) := rank(u, c) \cdot stability(u) \cdot descriptive(c)
+ \end{equation}
+\end{figure}
 
-Der eben gelesene Abschnitt zum Verfahren von \cite{collectiveKnowledge} wird noch weiter vertieft werden.
+
+Die zwei in Abschnitt \ref{ssub:aggregation} vorgestellten Methoden zur Aggregation werden jeweils mit und ohne Promotion von \cite{collectiveKnowledge} einzeln evaluiert. Eine mögliche Berechnung für den endgültigen Ranking Wert eines Kandidatentags mit der voting strategy und dem Einsatz vom Promotion ist in Gleichung \ref{finalRank} zu sehen.
+
+\begin{figure}[!hptb]
+ \begin{equation}
+ \label{finalRank}
+    score(c) :=  \sum_{u \in U} vote(u, c) \cdot promotion(u, c)
+ \end{equation}
+\end{figure}
+
+
+Die Basis für das Training der Parameter $(m,	k_r,	k_s, k_d )$ wird in Kapitel \ref{sec:performance_und_skalierung} näher erläutert. 
+
+% subsubsection aggregation (end)
+
+
+
+% subsubsection promotion (end)
 
 % subsection ranking_basierend_auf_kollektivem_wissen_nach_zwol (end)
 
