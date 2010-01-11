@@ -299,7 +299,7 @@ Die Autoren legen die beiden Ähnlichkeitswerte zusammen und so ergibt sich die 
   \end{equation}
 \end{figure}
 
-wobei $\lambda$ der Menge $[0,1]$ entspricht und später festgelegt wird.
+wobei $\lambda$ der Menge $[0,1]$ entspricht und später festgelegt wird. Dieser Parameter kontrolliert somit die Einflussnahme der einzelnen Ähnlichkeitswerte auf den resultierenden Gesamtwert $s_{ij}$.
 
 % subsubsection konstruktion_eines_tag_graphen (end)
 
@@ -327,7 +327,9 @@ Damit kann nun der Random Walk Prozess für die Iteration $k$ folgendermaßen de
   \end{equation}
 \end{figure}
 
-$v_j$ ist der initial geschätzte Wert für den Tag $t_j$ und $\alpha$ ist ein Gewichtungsparamter zwischen 0 und 1. Der Prozess konvergiert aufgrund der Eigenschaften von Markoffschen Ketten in einer endlichen Anzahl an Iterationen zu einem Vektor $r_\pi$. Der Beweis hierfür wird in dieser Ausarbeitung nicht angeführt.
+$v_j$ ist der initial geschätzte Wert für den Tag $t_j$ und $\alpha$ ist ein Gewichtungsparamter zwischen 0 und 1. Der Wert von $\alpha$ in Gleichung \ref{fig:randomWalk} reguliert, wie stark sich die Wahrscheinlichkeitsfunktion bzw. der initial geschätzte Ranking Wert aus Gleichung \ref{fig:kdeRelevance} auf den endgültigen Ranking Wert $r_k(j)$ nach dem Random Walk auswirkt.
+
+Der Prozess konvergiert aufgrund der Eigenschaften von Markoffschen Ketten in einer endlichen Anzahl an Iterationen zu einem Vektor $r_\pi$. Der Beweis hierfür wird in dieser Ausarbeitung nicht angeführt und kann in \cite{ranking} nachgelesen werden.
 
 
 % subsubsection random_walk_ueber_den_graphen (end)
