@@ -1,17 +1,14 @@
 %!TEX root = /Users/ede/Documents/Master/19_AS/Ausarbeitung/as-ausarbeitung.tex
-\section{Performance und Skalierung} % (fold)
-\label{sec:performance_und_skalierung}
+\section{Evaluation der vorgestellten Verfahren} % (fold)
+\label{sec:evaluation_der_verfahren}
 
-TODO: Kapitel eventuell umbenennen, hier soll auch die Qualität der Verfahren verglichen werden, also der Begriff Performance bezihet sich nicht nur auf die Geschwindigkeit
-
-
-Hier erfolgt die Darstellung der Ergebnisse der jeweils vorgenommenen Evaluation der unterschiedlichen vorgestellten Verfahren.
+In diesem Kapitel erfolgt die Darstellung der Ergebnisse der jeweils von den Autoren vorgenommenen Evaluation der eingesetzten Verfahren. Dabei sollen unterschiedliche Perspektiven beleuchtet werden. Der Aufbau der Evaluationsszenarios bestimmt die Ergebnisse. Hier soll beschrieben werden, welche Auswahl an Photos und Tags für die Evaluation verwendet wurden und ob diese nach speziellen Kriterien ausgesucht wurden. Die Art und Weise der Evaluation ist ebenfalls von Bedeutung, wobei hier zwischen automatischer und manueller bzw. durch Menschen durchgeführte Messungen der Verfahren unterschieden wird. Die Auswahl der Referenzdaten entscheidet zu welcher Basis die Verbesserungen gemessen werden und die Auswahl der Metriken entscheidet, was überhaupt gemessen wird und ob darauf fundierte Entscheidungen über die Qualität der Verfahren getroffen werden kann. Ebenso sollte auch die Leistung und Skalierbarkeit der Algorithmen von den Autoren untersucht werden, da zum Beispiel der Einsatz solch eines Systems bei Flickr stark von der Performanz abhängt und auch für viele Milliarden von Photos und Tags funktionieren muss. Schließlich sollen die Ergebnisse der Evaluation selbst präsentiert werden.
 
 - aufbau des evaluationsszenarios (welche auswahl an photos und tags wurde vorgenommen,)
 - art und weise der evaluation (automatisch, manuell, was sind die referenzdaten, wie wird die qualität bewertet), welche metriken werden angewandt
 - performance der algorithmen(gibts es laufzeit analysen der algorithmen, lässt sich das verfahren skalieren)
 - qualität der ergebnisse (sind verbesserung durch das Ranking entstanden, welche methode/kombination von methoden weist das beste ranking)
-- vergleichbarkeit der ergebnisse(in wie weit ist die evaluation standardisiert, welchen mehrwert/errungenschaften hat die arbeit hervorgebracht)
+% - vergleichbarkeit der ergebnisse(in wie weit ist die evaluation standardisiert, welchen mehrwert/errungenschaften hat die arbeit hervorgebracht)
 
 \subsection{Ergebnisse der Evaluation von Sigurbjörnsson und van Zwol} % (fold)
 \label{sub:ergebnisse_der_evaluation_von_collectiveknowledge}
@@ -40,6 +37,7 @@ Hier erfolgt die Darstellung der Ergebnisse der jeweils vorgenommenen Evaluation
 
 \subsubsection{Aufbau des Evaluationsszenarios} % (fold)
 \label{ssub:aufbau_des_evaluationsszenarios}
+
   - aufgabe des systems, die evaluiert wird:
     - schlage zu einem photo mit bereits vorhandenen benutzerdefinierten Tags weitere, relevante Tags vor
   - Zu diesem Zweck wurden 331 zufällige Photos gewählt, die jedoch 1. aus mehrere begrenzten Gebieten stammen, in denen die Probanden, die die Relevanz der vorgeschlagenen Tags bewerten, sich auskennen.
@@ -71,7 +69,7 @@ Hier erfolgt die Darstellung der Ergebnisse der jeweils vorgenommenen Evaluation
 
 \subsubsection{Metriken} % (fold)
 \label{ssub:metriken}
-Sigurbjörnsson und van Zwol stellen in \cite{collectiveKnowledge} drei unterschiedlich ausgerichtete Metriken zum Bewerten des Verfahren auf. Diese sind vor allem auf die qualitativen Aspekte von Tag Ranking ausgerichtet. Die Werte geben jeweils prozentual die erfolgreichen Ergebnisse an.
+Sigurbjörnsson und van Zwol stellen in \cite{collectiveKnowledge} drei unterschiedlich ausgerichtete Metriken zum Bewerten des Verfahrens auf. Diese sind vor allem auf die qualitativen Aspekte von Tag Ranking ausgerichtet und werden manuell, sprich durch Probandenbefragung ermittelt.
 \begin{itemize}
   \item \textbf{Mean Reciprocal Rank (MRR)} misst die Position des ersten relevanten Tags in der Vorschlagsliste, gemittelt über alle bewerteten Photos. Dieser Wert sagt aus, wie gut das System in der Lage ist, die relevantesten Tags an vorderster Stelle zu positionieren.
   \item \textbf{Success at rank k (S@k)} protokolliert die Wahrscheinlichkeit, innerhalb der ersten $k$ Elemente der Vorschlagsliste relevante Tags vom System zu erhalten. Dieser Wert wird für $k = 1$ und $k = 5$ ermittelt.
@@ -83,7 +81,7 @@ Sigurbjörnsson und van Zwol stellen in \cite{collectiveKnowledge} drei untersch
 \subsubsection{Ergebnisse der Evaluation} % (fold)
 \label{ssub:ergebnisse_der_evaluation}
 
-Die Ergebnisse sind in die vier Bereiche Aggregationsstrategien, Promotion, Tag Klassen und Semantisch Analyse aufgeteilt und werden im Folgenden gesondert beschrieben. Die Tabelle \ref{tab:strategiesrResultsBjoern}
+Die Ergebnisse sind in die vier Bereiche Aggregationsstrategien, Promotion, Photo Klassen und Semantisch Analyse aufgeteilt und werden im Folgenden gesondert beschrieben. Die Tabelle \ref{tab:strategiesrResultsBjoern} enthält die Ergebnisse der von \cite{collectiveKnowledge} durchgeführten Evaluation. 
 
 \begin{table}[htbp]
   \centering
@@ -91,28 +89,65 @@ Die Ergebnisse sind in die vier Bereiche Aggregationsstrategien, Promotion, Tag 
   \hline
    & \textbf{MRR} & \textbf{S@1} & \textbf{S@5} & \textbf{P@5}\\
   \hline
-  Grundstrategien\\
+  Basisstrategien\\
   \textbf{sum} & .7628 & .6550 & .9200 & .4930\\
   \textbf{vote} & .6755 & .4550 & .8750 & .4730\\
   \hline
   Promototionsstrategien\\
-  r6c1 & r6c2 & r6c3 & r6c4 & r6c5\\
-  r7c1 & r7c2 & r7c3 & r7c4 & r7c5\\
+  \textbf{sum\textsuperscript{+}} & .7718 & .6600 & .9450 & .5080\\
+  \textbf{vote\textsuperscript{+}} & .7883 & .6750 & .9400 & .5420\\
   \hline
   Verbesserung durch Promotion\\
-  \textbf{vote\textsuperscript{+} vs. sum} & 4.3\% & r9c3 & r9c4 & r9c5\\
+  \textbf{vote\textsuperscript{+} vs. sum} & 4.3\% & 3.1\% & 2.2\% & 9.9\%\\
   \hline
   \end{tabular}
-  \caption{Die Ergebnisse der Evaluation aus \cite{collectiveKnowledge} für die Aggregationsstrategien und die Promotion.}
+  \caption{Die Ergebnisse der Evaluation aus \cite{collectiveKnowledge} für die Aggregation und Promotion. Die Werte geben in Prozenten die erfolgreichen, d.h. für gut oder sehr gut befundenen Ergebnisse an.}
   \label{tab:strategiesrResultsBjoern}
 \end{table}
 
-Bei der Betrachtung zwei unterschiedlichen Aggregationsstrategien fällt auf, dass die \emph{summing strategy} bessere Ergebnisse liefert und dabei 65 Prozent aller Tags auf Position eins relevant sind. Innerhalb der ersten fünf vorgeschlagenen Tags sind in 92 Prozent der Fälle relevante Tags enthalten, wobei die Präzision bzw. der P@5 Wert aussagt, dass knapp die Hälfte der fünf ersten vorgeschlagenen Tags nicht relevant ist. Damit ist belegt, dass durch die summing strategy der Annotationsprozess für den Benutzer verbessert werde konnte. Gleichzeitig spricht dies für die Verwendung von co-occurence bei Tag Ranking Verfahren.
+Bei der Betrachtung der zwei unterschiedlichen Aggregationsstrategien fällt auf, dass die \emph{summing strategy} bessere Ergebnisse liefert und dabei 65 Prozent aller Tags auf Position eins relevant sind. Innerhalb der ersten fünf vorgeschlagenen Tags sind in 92 Prozent der Fälle relevante Tags enthalten, wobei die Präzision bzw. der P@5 Wert aussagt, dass knapp die Hälfte der fünf ersten vorgeschlagenen Tags nicht relevant sind. Damit ist belegt, dass durch die summing Strategie der Annotationsprozess für den Benutzer verbessert werde konnte, da nun relevante Tags vorgeschlagenen werden. Gleichzeitig spricht dies für die Verwendung von co-occurence bei Tag Ranking Verfahren, da dies in der summing Strategie eingesetzt wird.
 
+Die Einsatz der Promotion von Tags, also das Abwerten sehr hochfrequenter und sehr niederfrequenter Tags, liefert im Vergleich zu den Basisstrategien für alle Metriken bessere Ergebnisse, wobei die voting Strategie etwas bessere Resultate liefert. Die summing Strategie erzielt in Kombination mit der Promotion von Tags leicht bessere Werte in der S@5 Metrik, die voting Strategie erzielt jedoch eine bessere Präzision, das heißt es sind mehr relevante Tags in der Vorschlagsliste enthalten. Insgesamt ist den Ergebnissen nach die voting Strategie in Kombination mit der Promotion die beste Variante. Die Promotion der Tags steigert die Leistung des Verfahrens signifikant, wie in der letzten Zeile der Tabelle \ref{tab:strategiesrResultsBjoern} zu entnehmen ist.
+ 
+Bei der Betrachtung der Photo Klassen, die nach der Anzahl ihrer benutzerdefinierten Tags unterteilt sind (siehe Tabelle \ref{tab:classes_for_tags_collective}), und der Leistung des vorgestellten Verfahrens, zeigt sich, dass die besten Ergebnisse in der Klasse I und II erreicht werden. Auch hierbei fällt auf, dass die Promotion deutlich bessere Werte für die Metriken liefert, wobei diese bei mehr benutzerdefinierten Tags stärker ausfällt als bei nur geringer Anzahl vorgegebener Tags zu einem Photo. Die Auswertung für die Photo Klassen ist in dieser Ausarbeitung nicht enthalten und kann in \cite{collectiveKnowledge}, Tabelle 5 eingesehen werden.
+%TODO: Tabelle 5 könnte noch rein, dann aber auch obigen letzten satz wieder entfernen
 
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lr}
+  \hline
+  \textbf{WordNet} & \textbf{Akzeptanzverhältnis}\\
+  \hline
+  Orte & 71\%\\
+  \hline
+  Artefakte oder Objekte & 61\%\\
+  \hline
+  Andere & 53\%\\
+  \hline
+  Handlungen oder Ereignisse & 51\%\\
+  \hline
+  Zeit & 46\%\\
+  \hline
+  Nicht klassifiziert & 39\%\\
+  \hline
+  Personen oder Gruppen & 33\%\\
+  \hline
+  \end{tabular}
+  
+  \caption{Der Bezug zwischen WordNet Kategorien und deren Akzeptanzverhältnis aus \cite{collectiveKnowledge}.}
+  \label{tab:wordNetResults}
+\end{table}
+
+Die semantische Analyse fokussiert auf die in Kapitel \ref{ssub:tags}, Abbildung \ref{fig:collectiveKnowledge_word_net_categories} ermittelten WordNet Kategorien für die Tags und erfasst, welche Kategorien von Tags eine bessere Akzeptanz bzw. Relevanzwerte durch die Probanden erfahren. So soll ermittelt werden, in welchen Kategorien von Begriffen das Verfahren bessere Ergebnisse liefert. Tabelle \ref{tab:wordNetResults} zeigt das Verhältnis von gut und sehr gut befundenen Tags zu den WordNet Kategorien. Ortsbezogene Tags wurden von den Probanden am meisten akzeptiert, gefolgt von Artefakten oder Objekten und Anderen. Personen, Gruppen und nicht klassifizierte Tags, die vom System vorgeschlagen werden, erreichen nur relativ schlechte Akzeptanzwerte. Damit eignet sich das Verfahren vornehmlich für die zuerst genannten Kategorien von Begriffen.
 
 % subsubsection ergebnisse_der_evaluation (end)
 
+\subsubsection*{Zusammenfassung} % (fold)
+\label{ssub:zusammenfassung}
+Die Ergebnisse der Evaluation sprechen eindeutig für den Einsatz von co-occurence basierten Verfahren für das Ranking von Tags. Die Auswertung hat ebenso gezeigt, dass auch die Analyse der bereits vorhanden Tags und das Einfließen dieser Analyse in Form von Promotion im Verfahren in einer verbesserten Leistung des Algorithmus resultiert.
+
+Die Evaluation von Sigurbjörnsson und van Zwol bezieht sich jedoch nur auf die qualitativen Aspekte des Ranking Verfahrens. Quantitative Messungen zur Skalierbarkeit und Laufzeit wurden nicht durchgeführt. 
+% subsubsection zusammenfassung (end)
 
 % subsection ergebnisse_der_evaluation_von_collectiveknowledge (end)
 
