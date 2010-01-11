@@ -1,13 +1,118 @@
 %!TEX root = /Users/ede/Documents/Master/19_AS/Ausarbeitung/as-ausarbeitung.tex
 \section{Performance und Skalierung} % (fold)
 \label{sec:performance_und_skalierung}
+
 TODO: Kapitel eventuell umbenennen, hier soll auch die Qualität der Verfahren verglichen werden, also der Begriff Performance bezihet sich nicht nur auf die Geschwindigkeit
 
 
 Hier erfolgt die Darstellung der Ergebnisse der jeweils vorgenommenen Evaluation der unterschiedlichen vorgestellten Verfahren.
 
-\subsection{Ergebnisse der Evaluation von nach Sigurbjörnsson und van Zwol} % (fold)
+- aufbau des evaluationsszenarios (welche auswahl an photos und tags wurde vorgenommen,)
+- art und weise der evaluation (automatisch, manuell, was sind die referenzdaten, wie wird die qualität bewertet), welche metriken werden angewandt
+- performance der algorithmen(gibts es laufzeit analysen der algorithmen, lässt sich das verfahren skalieren)
+- qualität der ergebnisse (sind verbesserung durch das Ranking entstanden, welche methode/kombination von methoden weist das beste ranking)
+- vergleichbarkeit der ergebnisse(in wie weit ist die evaluation standardisiert, welchen mehrwert/errungenschaften hat die arbeit hervorgebracht)
+
+\subsection{Ergebnisse der Evaluation von Sigurbjörnsson und van Zwol} % (fold)
 \label{sub:ergebnisse_der_evaluation_von_collectiveknowledge}
+
+- 2 aggregations strategien und die zusätzliche promotion der aggregierten Tags
+- Tabelle mit den strategien \ref{tab:fourStrategiesBjoern}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{c|cc}
+    \hline
+     & \textbf{vote} & \textbf{sum}\\
+    \hline
+    \textbf{no-promotion} & vote & sum\\
+    \hline
+    \textbf{promotion} & vote\textsuperscript{+} & sum\textsuperscript{+}\\
+    \hline
+  \end{tabular}
+  \caption{Die vier Kombinationen von Aggregations- und Promotionsalgorithmen nach \cite{collectiveKnowledge}}
+  \label{tab:fourStrategiesBjoern}
+\end{table}
+
+
+- die eingesetzten Strategien werden einzeln betrachtet und evaluiert
+- autoren bewerten, wie das system auf unterschiedliche Anzahl bereits vorhandener Tags reagiert. Weiterhin wird untersucht, ob das Verfahren für die WordNet Kategorien aus Abbildung \ref{fig:collectiveKnowledge_word_net_categories}, Kapitel \ref{ssub:tags} unterschiedliche gute Ergebnisse liefert.
+
+\subsubsection{Aufbau des Evaluationsszenarios} % (fold)
+\label{ssub:aufbau_des_evaluationsszenarios}
+  - aufgabe des systems, die evaluiert wird:
+    - schlage zu einem photo mit bereits vorhandenen benutzerdefinierten Tags weitere, relevante Tags vor
+  - Zu diesem Zweck wurden 331 zufällige Photos gewählt, die jedoch 1. aus mehrere begrenzten Gebieten stammen, in denen die Probanden, die die Relevanz der vorgeschlagenen Tags bewerten, sich auskennen.
+  2. Die Photos möglichst gleichmäßig auf die in Kapitel \ref{sub:klassifikation_von_tags} vorgestellten Klassen aus Tabelle \ref{tab:classes_for_tags_collective} verteilt sind. Dadurch soll überprüft werden, ob das Verfahren sich je nach Anzahl der bereits vergebenen Tags unterschiedlich verhält bzw. unterschiedlich gute Ergebnisse liefert.
+  
+  131 dieser Photos wurden für das manuelle Training der im Algorithmus benötigten Parameter $m,	k_r,	k_s, k_d $ verwendet. Die Werte sind in Tabelle \ref{tab:optimalParameterBjoern} aufgeführt. Die restlichen 200 Photos dienten als Grundlage für die Evaluation. Dabei sollten die Probanden jedes Photo und die vom System vorgeschlagenen Tags betrachten und für die ersten 10 Tags jeweils die Beschreibbarkeit bzw. Relevanz des Tags für das Photo auf einer Skala von eins bis vier (\emph{sehr gut, gut, nicht gut, weiß nicht}) bewerten. Gleichzeitig wurden den Probanden weitere Kontextinformationen zum Photo wie Titel, Beschreibung, Aufnahmedatum usw. präsentiert, so dass diese eine möglichst fundierte Bewertung abgeben können. Die Option \emph{weiß nicht} bestand für den Fall, dass doch nicht genug Wissen für eine begründete Bewertung vorhanden war. In der Auswertung wurden die Wahlmöglichkeiten \emph{sehr gut} und \emph{gut} zu einem Wert zusammen gefasst, um eine einfachere Auswertung im Sinne von \emph{relevant} und \emph{nicht relevant} durchführen zu können.
+  
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{ccccc}
+    \hline
+     & \textbf{m} & \textbf{k\textsubscript{s}} & \textbf{k\textsubscript{d}} & \textbf{k\textsubscript{r}}\\
+    \hline                          
+    \textbf{sum} & 10 & - & - & -\\
+    \hline                          
+    \textbf{vote} & 10 & - & - & -\\
+    \hline                          
+    \textbf{sum\textsuperscript{+}} & 25 & 0 & 12 & 3\\
+    \hline                          
+    \textbf{vote\textsuperscript{+}} & 25 & 9 & 11 & 4\\
+    \hline
+  \end{tabular}
+  \caption{Die optimalen Parameterwerte für $m,	k_r,	k_s, k_d$ aus \cite{collectiveKnowledge}.}
+  \label{tab:optimalParameterBjoern}
+\end{table}
+
+
+% subsubsection aufbau_des_evaluationsszenarios (end)
+
+\subsubsection{Metriken} % (fold)
+\label{ssub:metriken}
+Sigurbjörnsson und van Zwol stellen in \cite{collectiveKnowledge} drei unterschiedlich ausgerichtete Metriken zum Bewerten des Verfahren auf. Diese sind vor allem auf die qualitativen Aspekte von Tag Ranking ausgerichtet. Die Werte geben jeweils prozentual die erfolgreichen Ergebnisse an.
+\begin{itemize}
+  \item \textbf{Mean Reciprocal Rank (MRR)} misst die Position des ersten relevanten Tags in der Vorschlagsliste, gemittelt über alle bewerteten Photos. Dieser Wert sagt aus, wie gut das System in der Lage ist, die relevantesten Tags an vorderster Stelle zu positionieren.
+  \item \textbf{Success at rank k (S@k)} protokolliert die Wahrscheinlichkeit, innerhalb der ersten $k$ Elemente der Vorschlagsliste relevante Tags vom System zu erhalten. Dieser Wert wird für $k = 1$ und $k = 5$ ermittelt.
+  \item \textbf{Precision at rank k (P@k)} erfasst die Relation bzw. Anteil von relevanten zu irrelevanten vorgeschlagenen Tags. Dieser Wert wird ebenfalls über alle Photos gemittelt und erfasst die ersten 5 vorgeschlagenen Tags.
+\end{itemize}
+
+% subsubsection metriken (end)
+
+\subsubsection{Ergebnisse der Evaluation} % (fold)
+\label{ssub:ergebnisse_der_evaluation}
+
+Die Ergebnisse sind in die vier Bereiche Aggregationsstrategien, Promotion, Tag Klassen und Semantisch Analyse aufgeteilt und werden im Folgenden gesondert beschrieben. Die Tabelle \ref{tab:strategiesrResultsBjoern}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{ccccc}
+  \hline
+   & \textbf{MRR} & \textbf{S@1} & \textbf{S@5} & \textbf{P@5}\\
+  \hline
+  Grundstrategien\\
+  \textbf{sum} & .7628 & .6550 & .9200 & .4930\\
+  \textbf{vote} & .6755 & .4550 & .8750 & .4730\\
+  \hline
+  Promototionsstrategien\\
+  r6c1 & r6c2 & r6c3 & r6c4 & r6c5\\
+  r7c1 & r7c2 & r7c3 & r7c4 & r7c5\\
+  \hline
+  Verbesserung durch Promotion\\
+  \textbf{vote\textsuperscript{+} vs. sum} & 4.3\% & r9c3 & r9c4 & r9c5\\
+  \hline
+  \end{tabular}
+  \caption{Die Ergebnisse der Evaluation aus \cite{collectiveKnowledge} für die Aggregationsstrategien und die Promotion.}
+  \label{tab:strategiesrResultsBjoern}
+\end{table}
+
+Bei der Betrachtung zwei unterschiedlichen Aggregationsstrategien fällt auf, dass die \emph{summing strategy} bessere Ergebnisse liefert und dabei 65 Prozent aller Tags auf Position eins relevant sind. Innerhalb der ersten fünf vorgeschlagenen Tags sind in 92 Prozent der Fälle relevante Tags enthalten, wobei die Präzision bzw. der P@5 Wert aussagt, dass knapp die Hälfte der fünf ersten vorgeschlagenen Tags nicht relevant ist. Damit ist belegt, dass durch die summing strategy der Annotationsprozess für den Benutzer verbessert werde konnte. Gleichzeitig spricht dies für die Verwendung von co-occurence bei Tag Ranking Verfahren.
+
+
+
+% subsubsection ergebnisse_der_evaluation (end)
+
 
 % subsection ergebnisse_der_evaluation_von_collectiveknowledge (end)
 
