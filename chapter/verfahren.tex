@@ -291,15 +291,15 @@ Die \emph{concurrence similarity} $\varphi_c(t_i, t_j) = exp(-d(t_i, t_j))$ bezi
 
 Die Funktionen $f(t_i)$ und $f(t_j)$ geben die Anzahl der Photos an, in denen der Tag $t_i$ bzw. $t_j$ vorkommt, die Funktion $f(t_i, t_j)$ gibt die Anzahl der Photos in denen beide Tags vorkommen, an. $G$ ist die Anzahl aller Photos in Flickr.
 
-Die Autoren legen die beiden Ähnlichkeitswerte zusammen und so ergibt sich die Gewichtung $s_{ij}$ der Kante zwischen den Tags $t_i$ und $t_j$:
-\begin{figure}[hptb]
+Die Autoren legen die beiden Ähnlichkeitswerte zusammen und so ergibt sich die Gewichtung $s_{ij}$ der Kante zwischen den Tags $t_i$ und $t_j$, welche in Gleichung \ref{fig:combinedSimilarity} dargestellt ist.
+\begin{figure}[!hptb]
   \begin{equation}
   \label{fig:combinedSimilarity}
     s_{ij} = s(t_i, t_j) = \lambda \cdot \varphi_e(t_i, t_j) + (1 - \lambda) \cdot \varphi_c(t_i, t_j)
   \end{equation}
 \end{figure}
 
-wobei $\lambda$ der Menge $[0,1]$ entspricht und später festgelegt wird. Dieser Parameter kontrolliert somit die Einflussnahme der einzelnen Ähnlichkeitswerte auf den resultierenden Gesamtwert $s_{ij}$.
+$\lambda$ entspricht der Menge $[0,1]$ und wird später festgelegt. Dieser Parameter kontrolliert somit die Einflussnahme der einzelnen Ähnlichkeitswerte auf den resultierenden Gesamtwert $s_{ij}$.
 
 % subsubsection konstruktion_eines_tag_graphen (end)
 

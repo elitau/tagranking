@@ -1,15 +1,18 @@
 %!TEX root = /Users/ede/Documents/Master/19_AS/Ausarbeitung/as-ausarbeitung.tex
-\section{Vergleich und Bewertung der Verfahren} % (fold)
+\section{Vergleich der Verfahren} % (fold)
 \label{sec:vergleich_und_bewertung_der_verfahren}
-Gegenüberstellung der Verfahren, mit aufzeigen der Parallelen, der Unterschiede, jeweiligen Vor- und Nachteile und anschließender Bewertung.
 
+In diesem Kapitel soll ein kurzer Vergleich der beiden vorgestellten Ranking Verfahren durchgeführt werden. Dabei sollen im Rahmen einer kritischen Auseinandersetzung die Parallelen und Unterschiede aufgezeigt werden sowie die jeweiligen Vor- und Nachteile beschrieben werden.
 
-- van zwol: 
- - manuelle evaluation
- - fraglich, warum nicht beide verfahren(summing + voting) in kombination eingesetzt wurden
- - evaluation deutlich auf die Anwendung des Tag Rankings für das Vorschlagen ausgerichtet.
- 
-- liu:
- - es werden nur bereits vergebene Tags in der Evaluation betrachtet und somit kann nur deren Sortierung nach Relevanz verbessert werden.
+Das Verfahren von Sigurbjörnsson und van Zwol fokussiert sehr stark auf den Anwendungsfall des Vorschlagens von Tags beim Annotationsprozess. Daraus resultiert das Problem, dass alle Tags zwar einen co-occurence Wert erhalten, der Relevanz Wert jedoch relativ zum benutzerdefinierten Tag und somit zur Laufzeit berechnet wird. Dadurch ist es nicht möglich, die Ranking Werte etwa für eine Tag basierte Suche zu verwenden. Auch ist anzunehmen, dass dadurch Laufzeitprobleme entstehen können, falls das Verfahren in einem so umfangreichen System wie Flickr mit mehreren Milliarden von Photos und Tags eingesetzt wird.
 
+Weiterhin ist fraglich, warum die Autoren die beiden in Abschnitt \ref{ssub:aggregation} beschriebenen Aggregationsmethoden nicht kombiniert haben, um eine bessere Leistung zu erreichen. Hier erfolgte nur die Kombination mit der in Abschnitt \ref{ssub:promotion} dargestellten Promotion.
+
+Im Vergleich zum Verfahren von Liu et al. wird die Analyse der Tags aus Flickr stärker bei der Entwicklung des Verfahrens mit einbezogen. Die durch die Promotion vorgenommenen Anpassungen der Ranking Werte verbessern die Leistung des Algorithmus, vor allem in Bezug auf die in Kapitel \ref{sub:motivation} aufgelisteten Probleme. In \cite{ranking} wird auf die geschilderten Probleme der Mehrdeutigkeit und dem Semantischen Verlust nicht eingegangen. Liu et al. legen des Fokus mehr auf die Sortierung bereits vergebener Tags eines Photos nach der Relevanz zum Photo.
+
+Bei der näheren Betrachtung von \cite{ranking} gibt es Definitionsmängel bei der Berechnung der Euklidischen Distanz zwischen zwei Photos in Gleichung \ref{fig:gaussKern}. Hier wird zwar der Gauß'sche Kern definiert, jedoch bleibt die Distanz zweier Photos ohne Erklärung. Auch liefern die Autoren keine ausreichend genaue Beschreibung, wie die in Abschnitt \ref{ssub:konstruktion_eines_tag_graphen} beschriebene Ähnlichkeit zweier Tags berechnet wird. 
+
+Beide Autorengruppen führen eine umfangreiche manuelle Evaluation mit Hilfe von Probanden durch, was die Qualität der Ergebnisse untermauert. Die Bewertung des Verfahrens nach \cite{collectiveKnowledge} fällt umfangreicher aus. Hier werden 6 unterschiedliche Messungen vorgenommen, die eine breite Bewertung des Verfahrens ermöglichen. Leider ist keine der von den Autorengruppen eingesetzten Metriken direkt vergleichbar, so dass ein direkter Vergleich beider Methoden nicht unmittelbar möglich ist.
+
+Die Evaluation von Liu et al. verwendet mit dem NDCG als Messverfahren ein standardisiertes Werkzeug des Information Retrieval und kann somit besser mit anderen Tag Ranking Verfahren verglichen werden. Jedoch führen die Autoren, wie in Abschnitt \ref{ssub:aufbau_des_evaluationsszenarios_liu} beschrieben, eine relativ umfassende Vorfilterung der Testdaten durch, wobei nahezu 90 Prozent aller enthaltenen Tags entfernt werden, so dass die Ergebnisse dadurch an Vergleichbarkeit verlieren. Das Verfahren nach \cite{collectiveKnowledge} führt dies im Rahmen des Algorithmus durch und beseitigt so das Problem des semantischen Rauschens aus Kapitel \ref{sub:motivation}.
 % section vergleich_und_bewertung_der_verfahren (end)
