@@ -2,25 +2,7 @@
 \section{Tag-Ranking Verfahren} % (fold)
 \label{sec:tag_ranking_verfahren}
 % TODO
-Hier erfolgt die Darstellung der Tag-Ranking Verfahren im genauen. Und eine bessere Einleitung für dieses Kapitel.
-
-TODO:
-
-- bezug zw. {tag ranking, relevanz, ranking-wert, den beiden verfahren}, herstellen
-
-- relevanz bezieht sich ja bei denen immer auf die schon vergebenen tags
-
-% 
-% 
-% \begin{itemize}
-%   \item   Visual diversification of image search results \cite{diversification}
-%   \item   Tag ranking \cite{ranking}
-%   \item   Learning to tag \cite{learningToTag}
-%   \item   Learning tag relevance by neighbor voting for social image retrieval \cite{learningtagrelevance}
-%   \item   Improving recommendation lists through topic diversification \cite{improvingRecommendations}
-%   \item   Why we tag: motivations for annotation in mobile and online media \cite{whyWeTag}
-%   \item   Flickr tag recommendation based on collective knowledge \cite{collectiveKnowledge}
-% \end{itemize}
+Dieses Kapitel beschreibt die Tag Ranking Verfahren im genauen. Das Ziel der Verfahren ist es, die Relevanz der Tags in Bezug zu einem Photo zu bestimmen und den so ermittelten Ranking Wert für spätere Anwendungen verfügbar zu machen. Im Folgenden wird zunächst das Ranking Verfahren basierend auf kollektivem Wissen nach Sigurbjörnsson und van Zwol aus \cite{collectiveKnowledge} beschrieben. Im zweiten Teil erfolgt die Darstellung des Ranking Verfahrens nach Liu u. a. aus \cite{ranking}, welcher auf stochastischen Methoden basiert. Beide Verfahren sind auf hohe Anzahl von Photos mit bereits vergebenen Tags angewiesen, um die in Kapitel \ref{sec:evaluation_der_verfahren} erläuterte Leistung zu erreichen.
 
 \subsection{Ranking basierend auf kollektivem Wissen nach Sigurbjörnsson und van Zwol} % (fold)
 \label{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol}
@@ -43,13 +25,13 @@ Im Folgenden wird kurz das gesamte Verfahren von \cite{collectiveKnowledge} skiz
 \subsubsection{Co-occurrence} % (fold)
 \label{ssub:co_occurrence}
 
-Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos [in our collection] where both tags are used in the same annotation.''} 
+Die mathematische Definition von co-occurrence nach \cite{collectiveKnowledge} lautet \emph{``We define the co-occurrence between two tags to be the number of photos in our collection where both tags are used in the same annotation.''} 
  
  % - sehr einfache basis für verfahren
  
 Um den Wert der co-occurrence von der allgemeinen Verwendungsfrequenz der Tags zu trennen wird dieser Wert normalisiert. Co-occurrence als Maßeinheit für das gemeinsame Auftreten von Tags kann auf unterschiedliche Weise normalisiert werden, was deutliche Auswirkung auf das Ergebnis hat.
 
-Die symmetrischen Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und ${t_j}$ an, da hierbei die Summe der Anzahl beider Tags als Divisor verwendet wird und somit die gemeinsame Auftrittswahrscheinlich für diese beiden Tags angegeben wird. Beispielsweise sind zu \emph{Eiffel Tower} als äquivalent gefundene Tags \emph{Tour Eiffel, Eiffel, Seine, La Tour Eiffel} und \emph{Paris}.
+Die symmetrische Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und ${t_j}$ an, da hierbei die Summe der Anzahl beider Tags als Divisor verwendet wird und somit die gemeinsame Auftrittswahrscheinlichkeit für diese beiden Tags angegeben wird. Beispielsweise sind zu \emph{Eiffel Tower} als äquivalent gefundene Tags \emph{Tour Eiffel, Eiffel, Seine, La Tour Eiffel} und \emph{Paris}.
 \begin{figure}[hptb]
   \begin{equation}
   \label{symmetricNormalization}
@@ -57,9 +39,9 @@ Die symmetrischen Normalisierung gibt die Äquivalenz von zwei Tags, ${t_i}$ und
   \end{equation}
 \end{figure}
 
-Die co-occurrence $J(t_i, t_j)$ ist also ein Koeffizient aus der Schnittmenge der Tags ${t_i}$ und ${t_j}$, und der Vereinigungsmenge von ${t_i}$ und ${t_j}$.
+Die co-occurrence $J(t_i, t_j)$ ist also ein Quotient aus dem Betrag der Schnittmenge der Tags ${t_i}$ und ${t_j}$, und dem Betrag der Vereinigungsmenge von ${t_i}$ und ${t_j}$. Die Schnittmenge bezieht sich dabei auf alle Photos in denen die Tags ${t_i}$ und ${t_j}$ enthalten sind.
 
-Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens durch die Anzahl des ersten Tags dividiert. Damit wird also erfasst, wie oft ${t_i}$ gemeinsam mit ${t_j}$ gelistet wird, was beim Vorschlagen von Tags mehr Sinn macht, damit der Inhalt der Photos möglichst vielfältig anstatt genau getaggt werden kann. So ergibt der Tag \emph{Eiffel Tower} folgende Sequenz assoziierter Tags: \emph{Paris, France, Tour Eiffel, Eiffel} und \emph{Europe}.
+Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens durch die Anzahl des ersten Tags dividiert. Damit wird also erfasst, wie oft ${t_i}$ gemeinsam mit ${t_j}$ gelistet wird, was beim Vorschlagen von Tags vorteilhaft ist, damit der Inhalt der Photos möglichst vielfältig anstatt genau getaggt werden kann. So ergibt der Tag \emph{Eiffel Tower} folgende Sequenz assoziierter Tags: \emph{Paris, France, Tour Eiffel, Eiffel} und \emph{Europe}.
 % TODO: hier gibts kritikmöglichkeit, warum diese normaliesierung gewählt wurde, evtl. später aufgreifen.
 \begin{figure}[hptb]
  \begin{equation}
@@ -68,16 +50,9 @@ Bei der asymmetrischen Normalisierung wird die Anzahl des gemeinsamen Auftretens
  \end{equation}
 \end{figure}
 
-In Anbetracht der Aufgabe, die Medien möglichst vielfältig zu Taggen, wird die zweite Varianten von den Autoren verwendet.
+In Anbetracht der Aufgabe, die Medien möglichst vielfältig zu Taggen, wird die zweite Variante von den Autoren verwendet.
 
 Die normalisierten Werte für die co-occurrence fließen nun beim Vorschlagen von Tags in den Ranking Prozess ein. Zunächst wird für jeden vom Benutzer bereits vergebenen Tag $u$ eine Kandidatensequenz $C_u$ von Tags erstellt, wobei die Tags nach ihrem co-occurrence Wert zu dem jeweiligen benutzerdefinierten Tag geordnet sind.
-
-Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem Ranking verwendet:
-\begin{itemize}
-  \item Benutzerdefinierte Tags $U$ beziehen sich auf die zu einem Photo bereits vergebenen Tags.
-  \item Kandidatentags $C_u$ bezeichnet die nach dem co-occurrence Wert geordnete Liste von $m$ Tags für einen Tag $u \in U$. Die Menge $C$ ist somit die Vereinigungsmenge aller Kandidatentags für jeden vom Benutzer vergebenen Tag $u$.
-  \item Vorgeschlagene Tags $R$ ist die endgültige, vom System produzierte, geordnete Liste von $n$ höchst bewerteten Tags für ein Photo.
-\end{itemize}
 
 % subsubsection co_occurrence (end)
 
@@ -85,7 +60,14 @@ Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem
 \subsubsection{Aggregation der Kandidatentags} % (fold)
 \label{ssub:aggregation}
 
-Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, deren Gemeinsamkeit darin besteht, dass sie jeweils über alle Kandidatentags iterieren. Die erste wertet Tags höher, die in mehreren Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
+Bei der Aggregation werden die Kandidatensequenzen für die unterschiedlichen vom Benutzer vergebenen Tags zu einer einzigen geordneten Liste vereinigt. Dabei werden zwei unterschiedliche Strategien vorgeschlagen, die voting Strategie und die summing Strategie. Die erste wertet Tags höher, die in mehreren Kandidatensequenzen vorkommen, die zweite betrachtet nur den Wert der co-occurrence für die Tags. 
+
+Folgende unterschiedliche Typen von Tag Mengen werden in der Aggregation und dem Ranking verwendet:
+\begin{itemize}
+  \item Benutzerdefinierte Tags $U$ beziehen sich auf die zu einem Photo bereits vergebenen Tags.
+  \item Kandidatentags $C_u$ bezeichnet die nach dem co-occurrence Wert geordnete Liste von $m$ Tags für einen Tag $u \in U$. Die Menge $C$ ist somit die Vereinigungsmenge aller Kandidatentags für jeden vom Benutzer vergebenen Tag $u$.
+  \item Vorgeschlagene Tags $R$ ist die endgültige, vom System produzierte, geordnete Liste von $n$ höchst bewerteten Tags für ein Photo.
+\end{itemize}
 
 Bei der \emph{voting strategy} werden die Tags $c \in C$ höher gewertet bzw. überhaupt gezählt, falls der Tag $c$ in der Menge $C_u$, also einer Kandidatensequenz, vorkommt. 
 \begin{figure}[hptb]
@@ -159,15 +141,16 @@ Die kombinierte Gleichung für die Promotion ergibt sich aus einer Multiplikatio
  \end{equation}
 \end{figure}
 
-
-Die zwei in Abschnitt \ref{ssub:aggregation} vorgestellten Methoden zur Aggregation werden jeweils mit und ohne Promotion von \cite{collectiveKnowledge} einzeln evaluiert. Eine mögliche Berechnung für den endgültigen Ranking Wert eines Kandidatentags mit der voting strategy und dem Einsatz vom Promotion ist in Gleichung \ref{finalRank} zu sehen.
-
 \begin{figure}[!hptb]
  \begin{equation}
  \label{finalRank}
     score(c) :=  \sum_{u \in U} vote(u, c) \cdot promotion(u, c)
  \end{equation}
 \end{figure}
+
+Die zwei in Abschnitt \ref{ssub:aggregation} vorgestellten Methoden zur Aggregation werden jeweils mit und ohne Promotion von \cite{collectiveKnowledge} einzeln evaluiert. Eine mögliche Berechnung für den endgültigen Ranking Wert eines Kandidatentags mit der voting strategy und dem Einsatz vom Promotion ist in Gleichung \ref{finalRank} zu sehen.
+
+
 
 
 Die Basis für das Training der Parameter $m,	k_r,	k_s, k_d$ wird in Kapitel \ref{sec:evaluation_der_verfahren} näher erläutert. 
@@ -177,29 +160,6 @@ Die Basis für das Training der Parameter $m,	k_r,	k_s, k_d$ wird in Kapitel \re
 
 \subsection{Verbesserung der Relevanz von Tags durch einen Random Walk nach Liu u. a.} % (fold)
 \label{sub:verbesserung_der_relevanz_durch_einen_random_walk}
-
-% - Initialwert ist zunächst für alle Tags gleich
-% 
-% - Zunächst Bestimmung des Wertes durch Beziehung zu Photos mit gleichen Tags, ähnliche dem Ansatz von \cite{collectiveKnowledge}. Dieser Wert ist die Gewichtung der Kanten zwischen zwei Tags/Knoten im folgenden Graph.
-% 
-% - Daraufhin wird ein Tag Graph erstellt, der als Basis für einen Random Walk dient. Vgl. \cite{} für Random Walk Literatur. 
-% 
-% - Dabei wird der Graph als Matrix mit den Ranking Werten formuliert. 
-% 
-% - Durch den Random Walk werden die Relevanzwerte durch die Gewichtung der Tags zu einander angepasst.
-% Initialwert für den Rank eines Tags wird durch die Beziehung zwischen durch die Photos assoziierten Tags bestimmt. Für jedes Photo x mit den Nachbarn (haben den gleichen Tag) X
-
-% Daraufhin erfolgt das Erstellen eines Tag Graphen
-
-% \begin{itemize}
-%   \item Wahrscheinlichkeitsorientierte Schätzung der Relevanz von Tags.
-%   \item Random-Walk basierte Verfeinerung des Rankings
-%     
-%     \begin{itemize}
-%       \item Aufbau eines Beziehungs-Graphen der Tags.
-%       \item Random Walk über den Graphen
-%     \end{itemize}
-% \end{itemize}
 
 % TODO: umformulieren, so dass das verfahren besser beschrieben wird.
 Auch hier wird das Verfahren erst kurz in seiner Gesamtheit vorgestellt und anschließend im Detail betrachtet.
@@ -222,7 +182,7 @@ Die Autoren von \cite{ranking} setzen den Ranking Wert gleich dem Relevanz Wert 
 Im Unterschied zu \cite{collectiveKnowledge} wird hier über alle vorhandenen Bilder iteriert und für jeden Tag der Bilder ein Ranking Wert ermittelt. Hierbei wird der initiale Ranking Wert für ein Tag anhand eines Wahrscheinlichkeitstheoretischen Ansatzes, der Kerndichteschätzung, ermittelt.
  
 % TODO: das raff ich nicht, aber hoffentlich raffts keiner, dass ich es nicht raff: was ist p(t)
- - Für einen Tag $t$ ist die Relevanz $s(t, x)$ zum Photo $x$ definiert als:
+Für einen Tag $t$ ist die Relevanz $s(t, x)$ zum Photo $x$ definiert als:
  \begin{figure}[hptb]
   \begin{equation}
   \label{fig:initialAsyncTagRelevance}
@@ -230,17 +190,18 @@ Im Unterschied zu \cite{collectiveKnowledge} wird hier über alle vorhandenen Bi
   \end{equation}
  \end{figure}
  
-Durch die in Gleichung \ref{fig:initialAsyncTagRelevance} vorgenommene Normalisierung der Wahrscheinlichkeit für das Auftreten von Tag $t$ beim Photo $x$ ausgedrückt durch $p(t \vert x)$, werden sehr häufig verwendete Tags abgewertet. Zum Beispiel liegt die Wahrscheinlichkeit für den Tag \emph{photo} bei jedem Photo bei 1, so dass durch seine häufige Frequenz nur wenig Aussagekraft hat. Durch Teilung mit der A-priori-Wahrscheinlichkeit, was in diesem Fall $p(t) = (1 / \text{Anzahl aller Tags})$ entspricht, wird der Relevanz Wert angepasst. Dieses Prinzip der Normalisierung ist im Gebiet des Information Retrieval breit erforscht und überprüft worden (vgl. \cite{bingLiu}) und wird heutzutage in vielen Gebieten eingesetzt, beispielsweise bei Googles PageRank Algorithmus aus \cite{googlePageRank}.
+Durch die in Gleichung \ref{fig:initialAsyncTagRelevance} vorgenommene Normalisierung der Wahrscheinlichkeit für das Auftreten von Tag $t$ beim Photo $x$ ausgedrückt durch $p(t \vert x)$, werden sehr häufig verwendete Tags abgewertet. Zum Beispiel liegt die Wahrscheinlichkeit für den Tag \emph{photo} bei jedem Photo bei 1, so dass es durch seine häufige Frequenz nur wenig Aussagekraft hat. Durch Teilung mit der A-priori-Wahrscheinlichkeit, was in diesem Fall $p(t) = (1 / \text{Anzahl aller Tags})$ entspricht, wird der Relevanz Wert angepasst. Dieses Prinzip der Normalisierung ist im Gebiet des Information Retrieval breit erforscht und überprüft worden (vgl. \cite{bingLiu}) und wird heutzutage in vielen Gebieten eingesetzt, beispielsweise bei Googles PageRank Algorithmus aus \cite{googlePageRank}.
  
-Nach dem Satz von Bayes\footnote{Der Satz von Bayes oder Bayestheorem sagt folgende Gesetzmäßigkeit für bedingte Wahrscheinlichkeiten aus: $P(A|B) = \frac{P(B \vert A) \cdot P(A)} {P(B)}$.\\ Hierbei ist $P(A)$ die A-priori-Wahrscheinlichkeit für ein Ereignis $A$ und $P(B \vert A)$ die Wahrscheinlichkeit für ein Ereignis $B$ unter der Bedingung, dass $A$ eingetreten ist und $P(B)$ die A-priori-Wahrscheinlichkeit für ein Ereignis $B$. } kann man die Formel vereinfachen zu:
+Nach dem Satz von Bayes\footnote{Der Satz von Bayes oder Bayestheorem sagt folgende Gesetzmäßigkeit für bedingte Wahrscheinlichkeiten aus: $P(A|B) = \frac{P(B \vert A) \cdot P(A)} {P(B)}$.\\ Hierbei ist $P(A)$ die A-priori-Wahrscheinlichkeit für ein Ereignis $A$ und $P(B \vert A)$ die Wahrscheinlichkeit für ein Ereignis $B$ unter der Bedingung, dass $A$ eingetreten ist und $P(B)$ die A-priori-Wahrscheinlichkeit für ein Ereignis $B$. } kann man die Gleichung umformen zu:
 
 \begin{figure}[hptb]
   \begin{equation}
   \label{fig:bayesInitialRelevance}
-    s(t, x) = \frac{p(x \vert t)}{ p(t) }.
+    s(t, x) = \frac{p(x \vert t)}{ p(t) }
   \end{equation}
 \end{figure} 
 
+so dass nun im Unterschied zur Gleichung \ref{fig:initialAsyncTagRelevance} die Wahrscheinlichkeit für das Eintreten von $x$ in Abhängigkeit zu $t$ steht
 Da bei dem Algorithmus der Ranking Wert in Bezug zu einem Photo ermittelt wird und die Wahrscheinlichkeit $p(x)$ für ein Photo $x$ für alle zum Photo vergebenen Tags gleich ist, kann dieser Quotient entfernt werden, so dass $s(t,x) = p(x \vert t)$ gilt.
 
 Um nun die explizite Wahrscheinlichkeitsfunktion aufzustellen, wird die Kerndichteschätzung, in englisch Kernel Density Estimation (KDE) genannt, adaptiert. Die Kerndichteschätzung oder auch Parzen-Methode nach \cite{parzen} ist ein Verfahren zur Darstellung einer eindimensionalen Verteilung. Diese Schätzung ist, im Gegensatz zu üblichen Darstellungsvarianten wie dem Histogramm, eine stetige Schätzung der unbekannten Verteilung. Die Verteilung bzw. die Stichprobe für ein zum Photo $x$ bereits vergebenen Tag $t_i$ ist hierbei die Menge der Photos $X_i$, in denen $t_i$ ebenfalls vorkommt. Damit berechnet die Kerndichteschätzung den Ranking Wert $s(t_i, x)$ folgendermaßen:

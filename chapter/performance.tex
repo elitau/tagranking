@@ -13,7 +13,7 @@ In diesem Kapitel erfolgt die Darstellung der Ergebnisse der jeweils von den Aut
 \subsection{Ergebnisse der Evaluation von Sigurbjörnsson und van Zwol} % (fold)
 \label{sub:ergebnisse_der_evaluation_von_collectiveknowledge}
 
-Die Autoren von \cite{collectiveKnowledge}, Sigurbjörnsson und van Zwol, untersuchen die in Kapitel \ref{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol} vorgestellten Methoden auf ihre Leistung hin, möglichst relevante Tags zu den bereits vergebenen, benutzerdefinierten Tags vorzuschlagen. Dabei werden die eingesetzten Strategien einzeln betrachtet und evaluiert. Tabelle \ref{tab:fourStrategiesBjoern} veranschaulicht die vier Kombinationen.
+Die Autoren von \cite{collectiveKnowledge}, Sigurbjörnsson und van Zwol, untersuchen die in Kapitel \ref{sub:ranking_basierend_auf_kollektivem_wissen_nach_zwol} vorgestellten Methoden auf ihre Leistung hin, möglichst relevante Tags zu den bereits vergebenen, benutzerdefinierten Tags vorzuschlagen. Dabei werden die eingesetzten Strategien einzeln betrachtet und evaluiert. Tabelle \ref{tab:fourStrategiesBjoern} veranschaulicht die vier untersuchten Kombinationen.
 
 \begin{table}[htbp]
   \centering
@@ -151,7 +151,7 @@ Die Evaluation von Sigurbjörnsson und van Zwol bezieht sich jedoch nur auf die 
 \subsection{Ergebnisse der Evaluation von Liu u. a.} % (fold)
 \label{sub:ergebnisse_der_evaluation_von_liu}
 
-Ziel der Evaluation von Liu et al. war die Erfolgsquote der beiden Hauptmethoden des Verfahrens, Initiale stochastische Schätzung des Tag Ranking Wertes und die Verbesserung des Tag Rankings durch einen Random Walk, im Einzelnen und in Kombination. Dazu wurden die Tags durch Probanden nach ihrer Relevanz zum zugehörigen Photo bewertet und anschließend mit Hilfe der NDCG Messung, die in Abschnitt \ref{ssub:metriken_liu} näher erläutert wird, evaluiert.
+Ziel der Evaluation von Liu u. a. war die Erfolgsquote der beiden Hauptmethoden des Verfahrens, Initiale stochastische Schätzung des Tag Ranking Wertes und die Verbesserung des Tag Rankings durch einen Random Walk, im Einzelnen und in Kombination. Dazu wurden die Tags durch Probanden nach ihrer Relevanz zum zugehörigen Photo bewertet und anschließend mit Hilfe der NDCG Messung, die in Abschnitt \ref{ssub:metriken_liu} näher erläutert wird, evaluiert.
 
 \subsubsection{Aufbau des Evaluationsszenarios} % (fold)
 \label{ssub:aufbau_des_evaluationsszenarios_liu}
@@ -179,7 +179,7 @@ Nachdem für jede, gerankte Tag Liste eines Photos der NDCG ermittelt wurde, kö
 \subsubsection{Ergebnisse der Evaluation} % (fold)
 \label{ssub:ergebnisse_der_evaluation_liu}
 
-Obwohl Liu et al. die Kombination von stochastischer Schätzung und Random Walk für das Berechnen von Tag Ranking Werte vorschlagen, haben Sie die beiden Methoden einzeln und in Kombination untersucht. Die Referenzwerte für die Evaluation wurden hierbei aus der originalen, von Flickr gelieferten Tag Liste bezogen. Die Ergebnisse der Messung der Verfahren mittels NDCG ist an Abbildung \ref{fig:images_ndcgAll} dargestellt.
+Obwohl Liu u. a. die Kombination von stochastischer Schätzung und Random Walk für das Berechnen von Tag Ranking Werte vorschlagen, haben Sie die beiden Methoden einzeln und in Kombination untersucht. Die Referenzwerte für die Evaluation wurden hierbei aus der originalen, von Flickr gelieferten Tag Liste bezogen. Die Ergebnisse der Messung der Verfahren mittels NDCG ist an Abbildung \ref{fig:images_ndcgAll} dargestellt.
 \begin{figure}[htbp]
   \centering
     \includegraphics[height=3in]{images/ndcgAll.png}
@@ -203,7 +203,9 @@ Vergleicht man die Position des relevantesten Tags vor dem Tag Ranking in Abbild
 
 \subsubsection*{Zusammenfassung} % (fold)
 \label{ssub:zusammenfassung_und_bewertung_liu}
-Liu et al. belegen durch die durchgeführte Evaluation eine eindeutige Verbesserung der Relevanz von Tags durch Anwendung ihres Ranking Verfahrens. 
+Liu u. a. belegen durch die durchgeführte Evaluation eine eindeutige Verbesserung der Relevanz von Tags durch Anwendung ihres Ranking Verfahrens. Vor allem konnte eine bessere Leistung bei der Priorisierung des ersten Tags nachgewiesen werden. 
+
+Eine Analyse der Laufzeit des Algorithmus fehlt ebenso wie Untersuchungen zur Skalierbarkeit. 
 
 
 % subsubsection zusammenfassung_und_bewertung_liu (end)

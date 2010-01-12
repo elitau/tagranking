@@ -6,4 +6,6 @@ Es werden also vielfältige Anforderungen an ein Tag Ranking Verfahren gestellt,
 
 Der Ansatz von Sigurbjörnsson und van Zwol fokussiert auf den Wert der co-occurrence von zwei Tags. Basierend darauf wurden zwei Aggregationsstrategien vorgestellt, um die Kandidatensequenzen für benutzerdefinierte Tags zu ermitteln und zu einer, nach der Relevanz sortierten Sequenz, zusammen zu führen. Daraufhin erfolgt die Einbeziehung der Analyse, wobei extrem hoch- und niederfrequente Tags abgewertet werden. Das Verfahren eignet sich damit zum Vorschlagen von Tags bei der Annotation von Photos durch den Benutzer.
 
-Die Autoren von \cite{ranking} 
+Die Autoren von \cite{ranking} gehen einen anderen Weg und schätzen zunächst mit Hilfe einer stochastischen Methodik einen initialen Ranking Wert für jeden Tag eines Photos. Daraufhin wird ein Tag Graph konstruiert, wobei die Ähnlichkeit von Photos mit einbezogen wird und ein Random Walk ausgeführt wird. Die Methode des Random Walk ist in dem Gebiet des Information Retrieval etabliert und resultiert in guten Ergebnissen bei der Ermittlung von Relevanzwerten durch die Beziehung der einzelnen Tags untereinander.
+
+Beide Arbeiten werden durch eine ausführliche Evaluation der Ranking Verfahren abgeschlossen. Hierin weisen Sie nach, dass die Verwendung der vorgestellten Ranking Verfahren deutliche Verbesserungen in den Anwendungsgebieten von Tags, wie dem Vorschlagen von Tags bei der Annotation oder der tagbasierten Suche nach Multimedia Objekten, zur Folge hat.
